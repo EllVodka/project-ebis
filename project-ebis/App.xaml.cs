@@ -1,4 +1,6 @@
-﻿namespace project_ebis;
+﻿using project_ebis.View;
+
+namespace project_ebis;
 
 public partial class App : Application
 {
