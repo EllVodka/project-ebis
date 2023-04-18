@@ -13,8 +13,6 @@ namespace project_ebis.ViewModel
 {
     public class StatViewModel : BindableObject
     {
-        private string connectionString = "server=localhost;user=root;database=ebis;port=3306;password=root";
-
         public ObservableCollection<string> Resultats { get; set; }
 
         public StatViewModel()
