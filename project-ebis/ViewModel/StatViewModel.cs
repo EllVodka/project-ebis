@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using project_ebis.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,26 +24,11 @@ namespace project_ebis.ViewModel
 
         public void SelectToDatabase()
         {
-            MySqlConnection conn = new MySqlConnection(this.connectionString);
-            try
-            {
-                Debug.WriteLine("Connecting to MySQL...");
-                conn.Open();
-                MySqlCommand command = new MySqlCommand("SELECT libelle FROM ebis.secteur;", conn);
+            var databaseService = new DatabaseService("localhost", "ebis", 3306, "root", "root");
 
-                MySqlDataReader reader = command.ExecuteReader();
+            var conn = databaseService.CreateConnection();
 
-                while (reader.Read())
-                {
-                    Resultats.Add(reader.GetString(0));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            conn.Close();
-            Debug.WriteLine("Done.");
+            Resultats = databaseService.ExecuteSelectQuery("SELECT libelle FROM ebis.secteur;", conn);
         }
     }
 }
