@@ -8,7 +8,7 @@
              Title="Dashboard">
 
     <Grid RowDefinitions="2*,*,*"
-              ColumnDefinitions="*,*,*">
+          ColumnDefinitions="*,*,*">
         
         <BoxView Color="AliceBlue"/>
         
@@ -21,11 +21,14 @@
                 <DataTemplate x:DataType="model:Borne">
                     <HorizontalStackLayout>
                         <Label Text="{Binding NomSecteur}"
-                           TextColor="Red"/>
+                               Padding="10"
+                           TextColor="White"/>
                         <Label Text="{Binding NomStation}"
-                           TextColor="Red"/>
-                        <Label Text="{Binding idBorne}"
-                           TextColor="Red"/>
+                                Padding="10"
+                           TextColor="White"/>
+                        <Label Text="{Binding idBorne, StringFormat='Borne-{0}'}"
+                                Padding="10"
+                           TextColor="White"/>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
