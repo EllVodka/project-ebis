@@ -75,9 +75,9 @@ namespace project_ebis.Services
                 while (reader.Read())
                 {
                 var borne = new Borne(); 
-                    borne.NomSecteur = (string)reader[0];
-                    borne.NomStation = (string)reader[1];
-                    borne.IdBorne = (int)reader[2];
+                    borne.NomSecteur = (string)reader["NomSecteur"];
+                    borne.NomStation = (string)reader["NomStation"];
+                    borne.IdBorne = (int)reader["IdBorne"];
                     results.Add(borne);
                     
                 }
@@ -102,23 +102,23 @@ namespace project_ebis.Services
                 }
 
                 MySqlCommand command = new MySqlCommand("SELECT b.id AS IdBorne,"+
-                    "b.datemiseenservice     AS DateMiseEnService," +
+                    "b.datemiseenservice     AS DateMiseEnService, " +
                     "b.datederniererevision  AS DateDerniereRevision,"+
-                    "tc.libelletypecharge    AS TypeCharge"+
-                    "FROM borne b"+
-                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge"+
-                    "WHERE b.id = "+idBorne,connection);
-                //command.Parameters.AddWithValue("@id", idBorne);
+                    "tc.libelletypecharge    AS TypeCharge "+
+                    "FROM borne b "+
+                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge "+
+                    "WHERE b.id = @id;",connection);
+                command.Parameters.AddWithValue("@id", idBorne);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 Borne results = new Borne();           
 
                 while (reader.Read())
                 {
-                    results.IdBorne = (int)reader[0];
-                    results.DateMiseEnService = (string)reader[1];
-                    results.DerniereMaintenance = (string)reader[2];
-                    results.TypeCharge = (string)reader[3];                    
+                    results.IdBorne = (int)reader["IdBorne"];
+                    results.DateMiseEnService = (string)reader["DateMiseEnService"];
+                    results.DerniereMaintenance = (string)reader["DerniereMaintenance"];
+                    results.TypeCharge = (string)reader["TypeCharge"];
                 }
 
                 return results;
