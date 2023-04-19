@@ -6,10 +6,51 @@
              x:DataType="vm:BorneViewModels"
              Title="{Binding Borne.IdBorne, StringFormat='Borne n°{0}'}">
     <Grid ColumnDefinitions="*,*">
-        <FlexLayout Grid.Column="0">
+        <FlexLayout Grid.Column="0" JustifyContent="SpaceBetween">
             <HorizontalStackLayout>
-                <Label Text="Borne"></Label>
+                <Label Text="{Binding Borne.DateMiseEnService, StringFormat='Date d installation : {0}'}"></Label>
+                <Label Text="{Binding Borne.DerniereMaintenance, StringFormat='Derniere Maintenance : {0}'}"></Label>
+                <Label Text="{Binding Borne.TypeCharge, StringFormat='Cette borne possede une charge {0}'}"></Label>
             </HorizontalStackLayout>
+            <Button
+            Grid.Row="2"
+            Text="Localiser"
+            TextColor="Orange"
+            BorderWidth="3"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            WidthRequest="200"
+            CornerRadius="20"
+            BorderColor="Orange"
+            FontSize="16"
+            Padding="0,10,0,10"
+            Command="{Binding OpenMapCommand}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                            Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                            Value="0.9" />
+                                <Setter
+                                Property="BackgroundColor"
+                                Value="Orange"/>
+                                <Setter
+                                Property="TextColor"
+                                Value="White"/>
+                                <Setter
+                                Property="BorderWidth"
+                                Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
         </FlexLayout>
     </Grid>
 </ContentPage>

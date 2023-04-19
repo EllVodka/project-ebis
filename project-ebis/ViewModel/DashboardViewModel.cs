@@ -46,7 +46,7 @@ namespace project_ebis.ViewModel
                 new Dictionary<string, object>
                 {
                     {
-                    "Borne", borne
+                    "Borne", GetBorne(borne.IdBorne)
                     }
                 });
         }

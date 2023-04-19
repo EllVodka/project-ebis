@@ -10,5 +10,11 @@ namespace project_ebis.ViewModel
     {
         [ObservableProperty]
         Borne borne;
+
+        [RelayCommand]
+        async Task OpenMap()
+        {
+            await Map.Default.OpenAsync(1,2);
+        }
     }
 }
