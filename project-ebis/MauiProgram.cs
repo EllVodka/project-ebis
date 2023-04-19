@@ -17,6 +17,7 @@ public static class MauiProgram
 
 
         builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<JournauxIncidentPage>();
 
         return builder.Build();
 	}

@@ -90,6 +90,40 @@ namespace project_ebis.Services
                 return null;
             }
         }
+        public ObservableCollection<Borne> ExecuteSelectQueryForJournauxIncidents(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand(, connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                ObservableCollection<JournalIncident> results = new ObservableCollection<JournalIncident>();
+
+
+                while (reader.Read())
+                {
+                    var journalIncendie = new JournalIncident();
+                    journalIncident. = (string)reader[0];
+                    journalIncident. = (string)reader[1];
+                    journalIncident. = (int)reader[2];
+                    results.Add(journalIncident);
+
+                }
+
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 
 }

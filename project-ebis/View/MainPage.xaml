@@ -32,7 +32,6 @@
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
         <BoxView Grid.Row="1"
                  Grid.RowSpan="2"
