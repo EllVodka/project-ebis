@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:project_ebis.Model"
              xmlns:vm="clr-namespace:project_ebis.ViewModel"
              x:DataType="vm:StatViewModel"
-             x:Class="project_ebis.View.MainPage">
-    <StackLayout>
-        <ListView ItemsSource="{Binding Resultats}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding .}" />
+             x:Class="project_ebis.View.MainPage"
+             Title="Dashboard">
+
+    <Grid RowDefinitions="2*,*,*"
+          ColumnDefinitions="*,*,*">
+        
+        <BoxView Color="AliceBlue"/>
+        
+        <BoxView Grid.Column="1"
+                 Color="Red"/>
+
+        <CollectionView Grid.Column="2"
+                  ItemsSource="{Binding Bornes}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Borne">
+                    <HorizontalStackLayout>
+                        <Label Text="{Binding NomSecteur}"
+                               Padding="10"
+                           TextColor="White"/>
+                        <Label Text="{Binding NomStation}"
+                                Padding="10"
+                           TextColor="White"/>
+                        <Label Text="{Binding idBorne, StringFormat='Borne-{0}'}"
+                                Padding="10"
+                           TextColor="White"/>
+                    </HorizontalStackLayout>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+        <BoxView Grid.Row="1"
+                 Grid.RowSpan="2"
+                 Color="MediumPurple"/>
+        
+        <BoxView Grid.RowSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 Color="BlanchedAlmond"/>
+
+        <Button Grid.Row="1"
+                Grid.Column="2"
+                Text="Afficher les journaux d'entretiens"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TextColor="White"
+                BackgroundColor="Blue"/>
+
+        <Button Grid.Row="2"
+                Grid.Column="2"
+                Text="Afficher les journaux d'incidents"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TextColor="White"
+                BackgroundColor="Red"/>
+
+    </Grid>
 </ContentPage>

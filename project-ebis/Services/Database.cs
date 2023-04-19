@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
 using Debug = System.Diagnostics.Debug;
@@ -42,6 +43,44 @@ namespace project_ebis.Services
                 {
                     results.Add(reader.GetString(0));
                 }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public ObservableCollection<Borne> ExecuteSelectQueryForBorne(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT s.libelle AS NomSecteur," +
+                "st.adresseville AS NomStation," +
+                "b.id AS IdBorne " +
+                "FROM secteur s JOIN station st ON s.id = st.idsecteur " +
+                "INNER JOIN borne b ON b.idstation = st.id;",connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                ObservableCollection<Borne> results = new ObservableCollection<Borne>();
+            
+
+                while (reader.Read())
+                {
+                var borne = new Borne(); 
+                    borne.NomSecteur = (string)reader[0];
+                    borne.NomStation = (string)reader[1];
+                    borne.idBorne = (int)reader[2];
+                    results.Add(borne);
+                    
+                }
+
 
                 return results;
             }

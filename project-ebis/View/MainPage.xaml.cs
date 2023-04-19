@@ -8,7 +8,7 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		var viewModel = new StatViewModel();
-		viewModel.SelectToDatabase();
+		viewModel.GetAllBorne();
 		this.BindingContext = viewModel;
 	}
 }
