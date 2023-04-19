@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using project_ebis.Model;
 using System.Collections.ObjectModel;
 
 namespace project_ebis.Services
@@ -7,6 +8,8 @@ namespace project_ebis.Services
     {
         MySqlConnection CreateConnection();
         ObservableCollection<string> ExecuteSelectQuery(string selectQuery, MySqlConnection connection);
+        ObservableCollection<Borne> ExecuteSelectQueryForBorne(MySqlConnection connection);
+
     }
 
 }
