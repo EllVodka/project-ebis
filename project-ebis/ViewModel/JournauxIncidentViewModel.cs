@@ -11,15 +11,15 @@ namespace project_ebis.ViewModel
 {
     public partial class JournauxIncidentViewModel : BindableObject
     {
-        public ObservableCollection<JournalIncident> JournauxIncident { get; set; }
+        public ObservableCollection<JournalIncident> JournauxIncidents { get; set; }
 
-        public void GetAllJounauxIncident()
+        public void GetAllJounauxIncidents()
         {
             var databaseService = new DatabaseService("localhost", "ebis", 3306, "root", "root");
 
             var conn = databaseService.CreateConnection();
 
-            JournauxIncident = databaseService.ExecuteSelectQueryForJournauxIncident(conn);
+            JournauxIncidents = databaseService.ExecuteSelectQueryForJournauxIncidents(conn);
         }
     }
 }

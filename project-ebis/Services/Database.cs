@@ -2,6 +2,7 @@
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Globalization;
 using Debug = System.Diagnostics.Debug;
 
 namespace project_ebis.Services
@@ -90,7 +91,7 @@ namespace project_ebis.Services
                 return null;
             }
         }
-        public ObservableCollection<Borne> ExecuteSelectQueryForJournauxIncidents(MySqlConnection connection)
+        public ObservableCollection<JournalIncident> ExecuteSelectQueryForJournauxIncidents(MySqlConnection connection)
         {
             try
             {
@@ -99,22 +100,24 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand(, connection);
+                MySqlCommand command = new MySqlCommand("SELECT ti.libelle as TypeIncident, i.detail tas Detail, CONCAT(i.mois,'/',i.jour,'/',i.annee,' ',i.heures,':00') as DateIncident, i.idborne as IdBorne,i.id as IdIncident FROM incident i JOIN typeincident ti ON i.idtypeincident = ti.id ORDER BY i.annee DESC,i.mois DESC,i.jour DESC,i.heures DESC;", connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
-                ObservableCollection<JournalIncident> results = new ObservableCollection<JournalIncident>();
+                ObservableCollection<JournalIncident> results = new();
 
 
                 while (reader.Read())
                 {
-                    var journalIncendie = new JournalIncident();
-                    journalIncident. = (string)reader[0];
-                    journalIncident. = (string)reader[1];
-                    journalIncident. = (int)reader[2];
+                    var journalIncident = new JournalIncident
+                    {
+                        TypeIncident = (string)reader[0],
+                        DetailIncident = (string)reader[1],
+                        DateIncident = (string)reader[2],
+                        IdBorne = (int)reader[3]
+                    };
                     results.Add(journalIncident);
 
                 }
-
 
                 return results;
             }

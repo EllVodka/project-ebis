@@ -8,9 +8,9 @@
              Title="Journaux d'incidents">
 
     <Grid ColumnDefinitions="*,*">
-        <CollectionView ItemsSource="{Binding JournauxIncident}">
+        <CollectionView ItemsSource="{Binding JournauxIncidents}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Borne">
+                <DataTemplate x:DataType="model:JournalIncident">
                     <HorizontalStackLayout BackgroundColor="Red">
                         <Label Text="{Binding DateIncident}"
                                Padding="10"
