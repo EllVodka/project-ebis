@@ -28,6 +28,8 @@ public static class MauiProgram
         builder.Services.AddTransient<BornePage>();
         builder.Services.AddTransient<OperationViewModel>();
         builder.Services.AddTransient<OperationPage>();
+		builder.Services.AddTransient<EntretienViewModel>();
+		builder.Services.AddTransient<EntretienPage>();
 
 		
 

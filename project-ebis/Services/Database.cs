@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using MySqlConnector;
+﻿using MySqlConnector;
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -187,6 +186,41 @@ namespace project_ebis.Services
                     entretien.PrenomTechnicien = (string)reader["PrenomTechnicien"];
                     entretien.NomTechnicien = (string)reader["NomTechnicien"];
                     results.Add(entretien);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public async Task<ObservableCollection<ElementVerif>> GetElementVerif(MySqlConnection connection,int idEntretien)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT e.libelle AS Libelle ,ISNULL(de.annee) AS annee "+
+                    "FROM element e "+
+                    "INNER JOIN detailentretien de ON de.idElement = e.id "+
+                    "INNER JOIN entretien ent ON ent.id = de.idEntretien "+
+                    "WHERE ent.id = @idEntretien; ",connection);
+                command.Parameters.AddWithValue("@idEntretien", idEntretien);
+
+                MySqlDataReader reader = await command.ExecuteReaderAsync();
+                var results = new ObservableCollection<ElementVerif>();
+
+                while (reader.Read())
+                {
+                    var element = new ElementVerif();
+                    element.Libelle = (string)reader["Libelle"];
+                    element.Annee = (int)reader["Annee"];
+                    results.Add(element);
                 }
 
                 return results;

@@ -11,7 +11,7 @@ namespace project_ebis.Services
         ObservableCollection<Borne> ExecuteSelectQueryForBorne(MySqlConnection connection);
         Task<ObservableCollection<Operation>> GetJournalOperation(MySqlConnection connection, int idBorne);
         ObservableCollection<Entretien> GetJournalEntretien(MySqlConnection connection);
-
+        Task<ObservableCollection<ElementVerif>> GetElementVerif(MySqlConnection connection, int idEntretien);
     }
 
 }

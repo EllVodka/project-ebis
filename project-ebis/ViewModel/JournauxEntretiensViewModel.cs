@@ -1,11 +1,13 @@
-﻿using MySqlConnector;
+﻿using CommunityToolkit.Mvvm.Input;
+using MySqlConnector;
 using project_ebis.Model;
 using project_ebis.Services;
+using project_ebis.View;
 using System.Collections.ObjectModel;
 
 namespace project_ebis.ViewModel;
 
-public class JournauxEntretiensViewModel
+public partial class JournauxEntretiensViewModel : BaseViewModel
 {
     public ObservableCollection<Entretien> journalEntretien { get; set; } = new();
 
@@ -22,5 +24,19 @@ public class JournauxEntretiensViewModel
         conn = databaseService.CreateConnection();
         this.journalEntretien = databaseService.GetJournalEntretien(conn);
         conn.Close();
+    }
+
+    [RelayCommand]
+    async Task GoToEntretien(Entretien entretien)
+    {
+        await Shell.Current.GoToAsync(
+            nameof(EntretienPage), 
+            true,
+            new Dictionary<string, object>
+        {
+            {
+                "Entretien",entretien
+            }
+        });
     }
 }
