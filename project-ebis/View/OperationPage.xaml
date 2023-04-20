@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="project_ebis.View.OperationPage"
+             xmlns:model="clr-namespace:project_ebis.Model"
+             xmlns:vm="clr-namespace:project_ebis.ViewModel"
+             x:DataType="vm:OperationViewModel"
+             Title="{Binding Operation.IdBorne, StringFormat='Journal opération pour la borne n°{0}'}">
+    <VerticalStackLayout>
+        <Label 
+            Text="{Binding Operation.TypeCharge,
+            StringFormat='Type de charge : {0}'}"
+            TextColor="White" />
+        <Label 
+            Text="{Binding Operation.DateDebut,
+            StringFormat='Debut de charge : {0}'}" TextColor="White" />
+        <Label 
+            Text="{Binding Operation.DateFin,
+            StringFormat='Fin de charge : {0}'}" TextColor="White" />
+        <Label 
+            Text="{Binding Operation.KwHConsomme,
+            StringFormat='KilWatt/Heure consommé : {0}'}" TextColor="White" />
+    </VerticalStackLayout>
+</ContentPage>

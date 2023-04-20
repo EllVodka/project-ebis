@@ -25,6 +25,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddTransient<BorneViewModels>();
         builder.Services.AddTransient<BornePage>();
+        builder.Services.AddTransient<OperationViewModel>();
+        builder.Services.AddTransient<OperationPage>();
 
         return builder.Build();
 	}
