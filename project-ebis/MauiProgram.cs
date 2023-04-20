@@ -18,9 +18,12 @@ public static class MauiProgram
 			});
 
 
+
+
+        builder.Services.AddSingleton<JournauxEntretiensViewModel>();
+        builder.Services.AddSingleton<JournauxEntretienPage>();
         builder.Services.AddSingleton<MainPage>();
 		    builder.Services.AddSingleton<JournauxIncidentPage>();
-        builder.Services.AddSingleton<JournauxIncidentViewModel>();
 		    builder.Services.AddSingleton<DashboardViewModel>();
 		    builder.Services.AddSingleton<DatabaseService>();
         
@@ -30,6 +33,10 @@ public static class MauiProgram
 		    builder.Services.AddTransient<IncidentPage>();
         builder.Services.AddTransient<OperationViewModel>();
         builder.Services.AddTransient<OperationPage>();
+		builder.Services.AddTransient<EntretienViewModel>();
+		builder.Services.AddTransient<EntretienPage>();
+
+		
 
 
         return builder.Build();

@@ -12,6 +12,7 @@ public partial class AppShell : Shell
 		    Routing.RegisterRoute("JournauxIncidentPage", typeof(JournauxIncidentPage));
 		    Routing.RegisterRoute("IncidentPage", typeof(IncidentPage));
         Routing.RegisterRoute("OperationPage", typeof(OperationPage));
-
+        Routing.RegisterRoute(nameof(JournauxEntretienPage), typeof(JournauxEntretienPage));
+        Routing.RegisterRoute(nameof(EntretienPage), typeof(EntretienPage));
     }
 }
