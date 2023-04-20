@@ -30,11 +30,7 @@ namespace project_ebis.ViewModel
         public void GetAllBorne()
         {            
             Bornes = this.databaseService.ExecuteSelectQueryForBorne(conn);
-        }
-
-        public Borne GetBorne(int idBorne)
-        {
-            return this.databaseService.GetBorne(conn,idBorne);
+            conn.Close();
         }
 
         [RelayCommand]
@@ -46,7 +42,7 @@ namespace project_ebis.ViewModel
                 new Dictionary<string, object>
                 {
                     {
-                    "Borne", GetBorne(borne.IdBorne)
+                    "Borne", borne
                     }
                 });
         }

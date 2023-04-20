@@ -7,7 +7,6 @@ public partial class BornePage : ContentPage
 	public BornePage(BorneViewModels viewModel)
 	{
 		InitializeComponent();
-
 		BindingContext = viewModel;
 	}
 }

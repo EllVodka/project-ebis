@@ -62,11 +62,17 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT s.libelle AS NomSecteur," +
-                "st.adresseville AS NomStation," +
-                "b.id AS IdBorne " +
-                "FROM secteur s JOIN station st ON s.id = st.idsecteur " +
-                "INNER JOIN borne b ON b.idstation = st.id;",connection);
+                MySqlCommand command = new MySqlCommand("SELECT "+
+                    "s.libelle                  AS NomSecteur,"+
+                    "st.adresseville            AS NomStation,"+
+                    "b.id                       AS IdBorne,"+
+                    "b.datemiseenservice        AS DateMiseEnService,"+
+                    "b.datederniererevision     AS DerniereMaintenance," +
+                    "tc.libelletypecharge       AS TypeCharge "+
+                    "FROM secteur s "+
+                    "INNER JOIN station st ON s.id = st.idsecteur "+
+                    "INNER JOIN borne b ON b.idstation = st.id "+
+                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge;",connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 ObservableCollection<Borne> results = new ObservableCollection<Borne>();
@@ -78,6 +84,9 @@ namespace project_ebis.Services
                     borne.NomSecteur = (string)reader["NomSecteur"];
                     borne.NomStation = (string)reader["NomStation"];
                     borne.IdBorne = (int)reader["IdBorne"];
+                    borne.DateMiseEnService = (DateTime)reader["DateMiseEnService"];
+                    borne.DerniereMaintenance = (DateTime)reader["DerniereMaintenance"];
+                    borne.TypeCharge = (string)reader["TypeCharge"];
                     results.Add(borne);
                     
                 }
@@ -92,7 +101,7 @@ namespace project_ebis.Services
             }
         }
 
-        public Borne GetBorne(MySqlConnection connection,int idBorne)
+        public async Task<ObservableCollection<Operation>> GetJournalOperation(MySqlConnection connection, int idBorne)
         {
             try
             {
@@ -101,24 +110,23 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT b.id AS IdBorne,"+
-                    "b.datemiseenservice     AS DateMiseEnService, " +
-                    "b.datederniererevision  AS DateDerniereRevision,"+
-                    "tc.libelletypecharge    AS TypeCharge "+
-                    "FROM borne b "+
-                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge "+
-                    "WHERE b.id = @id;",connection);
+                MySqlCommand command = new MySqlCommand("SELECT "+
+                    "oc.dateheuredebut   AS DateDebut,"+
+                    "oc.numoperation     AS IdOperation "+
+                    "FROM operationrechargement oc "+
+                    "INNER JOIN borne b ON oc.idborne = b.id "+
+                    "WHERE b.id = @id",connection);
                 command.Parameters.AddWithValue("@id", idBorne);
 
-                MySqlDataReader reader = command.ExecuteReader();
-                Borne results = new Borne();           
+                MySqlDataReader reader = await command.ExecuteReaderAsync();
+                var results = new ObservableCollection<Operation>();
 
                 while (reader.Read())
                 {
-                    results.IdBorne = (int)reader["IdBorne"];
-                    results.DateMiseEnService = (string)reader["DateMiseEnService"];
-                    results.DerniereMaintenance = (string)reader["DerniereMaintenance"];
-                    results.TypeCharge = (string)reader["TypeCharge"];
+                    var operation = new Operation();
+                    operation.DateDebut = (DateTime)reader["DateDebut"];
+                    operation.IdOperation = (int)reader["IdOperation"];
+                    results.Add(operation);
                 }
 
                 return results;

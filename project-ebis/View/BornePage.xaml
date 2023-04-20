@@ -2,20 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="project_ebis.View.BornePage"
+             xmlns:model="clr-namespace:project_ebis.Model"
              xmlns:vm="clr-namespace:project_ebis.ViewModel"
              x:DataType="vm:BorneViewModels"
              Title="{Binding Borne.IdBorne, StringFormat='Borne n°{0}'}">
-    <Grid ColumnDefinitions="*,*">
-        <FlexLayout Grid.Column="0" JustifyContent="SpaceBetween">
-            <HorizontalStackLayout>
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*,200">
+        <VerticalStackLayout Padding="20" Grid.Column="0" Grid.Row="0">
                 <Label Text="{Binding Borne.DateMiseEnService, StringFormat='Date d installation : {0}'}"></Label>
                 <Label Text="{Binding Borne.DerniereMaintenance, StringFormat='Derniere Maintenance : {0}'}"></Label>
                 <Label Text="{Binding Borne.TypeCharge, StringFormat='Cette borne possede une charge {0}'}"></Label>
-            </HorizontalStackLayout>
-            <Button
-            Grid.Row="2"
+            </VerticalStackLayout>
+        <Button
             Text="Localiser"
             TextColor="Orange"
+            Grid.Column="0"
+            Grid.Row="1"
             BorderWidth="3"
             VerticalOptions="Center"
             HorizontalOptions="Center"
@@ -25,32 +26,59 @@
             FontSize="16"
             Padding="0,10,0,10"
             Command="{Binding OpenMapCommand}">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Scale"
                             Value="1" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale"
                             Value="0.9" />
-                                <Setter
+                            <Setter
                                 Property="BackgroundColor"
                                 Value="Orange"/>
-                                <Setter
+                            <Setter
                                 Property="TextColor"
                                 Value="White"/>
-                                <Setter
+                            <Setter
                                 Property="BorderWidth"
                                 Value="0"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-        </FlexLayout>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Button>
+        <CollectionView Grid.Column="1" Grid.Row="0" ItemsSource="{Binding journalOperation}" BackgroundColor="Red">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Operation">
+                    <HorizontalStackLayout>
+                        <Label Text="{Binding IdOperation}"
+                                Padding="10"
+                           TextColor="White"/>
+                        <Label Text="{Binding DateDebut}"
+                               Padding="10"
+                           TextColor="White"/>                        
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            Grid.Column="1"
+            Grid.Row="1"
+            Text="Clique"
+            Command="{Binding GetJournalOperationCommand}"
+            BorderWidth="3"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            WidthRequest="200"
+            CornerRadius="20"
+            BorderColor="MediumPurple"
+            FontSize="16"
+            Padding="0,10,0,10">
+        </Button> 
     </Grid>
 </ContentPage>
