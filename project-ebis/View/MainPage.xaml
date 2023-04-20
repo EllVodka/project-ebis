@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:project_ebis.Model"
              xmlns:vm="clr-namespace:project_ebis.ViewModel"
-             x:DataType="vm:StatViewModel"
+             x:DataType="vm:DashboardViewModel"
              x:Class="project_ebis.View.MainPage"
              Title="Dashboard">
 
@@ -20,13 +20,20 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Borne">
                     <HorizontalStackLayout>
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                 Command="{Binding Source={RelativeSource 
+                                AncestorType={x:Type vm:DashboardViewModel}},
+                                Path=GoToBorneCommand}"
+                                CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
                         <Label Text="{Binding NomSecteur}"
                                Padding="10"
                            TextColor="White"/>
                         <Label Text="{Binding NomStation}"
                                 Padding="10"
                            TextColor="White"/>
-                        <Label Text="{Binding idBorne, StringFormat='Borne-{0}'}"
+                        <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
                                 Padding="10"
                            TextColor="White"/>
                     </HorizontalStackLayout>

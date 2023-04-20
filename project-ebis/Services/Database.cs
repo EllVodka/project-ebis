@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Microsoft.Maui.Controls;
+using MySqlConnector;
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -62,11 +63,17 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT s.libelle AS NomSecteur," +
-                "st.adresseville AS NomStation," +
-                "b.id AS IdBorne " +
-                "FROM secteur s JOIN station st ON s.id = st.idsecteur " +
-                "INNER JOIN borne b ON b.idstation = st.id;",connection);
+                MySqlCommand command = new MySqlCommand("SELECT "+
+                    "s.libelle                  AS NomSecteur,"+
+                    "st.adresseville            AS NomStation,"+
+                    "b.id                       AS IdBorne,"+
+                    "b.datemiseenservice        AS DateMiseEnService,"+
+                    "b.datederniererevision     AS DerniereMaintenance," +
+                    "tc.libelletypecharge       AS TypeCharge "+
+                    "FROM secteur s "+
+                    "INNER JOIN station st ON s.id = st.idsecteur "+
+                    "INNER JOIN borne b ON b.idstation = st.id "+
+                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge;",connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 ObservableCollection<Borne> results = new ObservableCollection<Borne>();
@@ -75,9 +82,12 @@ namespace project_ebis.Services
                 while (reader.Read())
                 {
                 var borne = new Borne(); 
-                    borne.NomSecteur = (string)reader[0];
-                    borne.NomStation = (string)reader[1];
-                    borne.idBorne = (int)reader[2];
+                    borne.NomSecteur = (string)reader["NomSecteur"];
+                    borne.NomStation = (string)reader["NomStation"];
+                    borne.IdBorne = (int)reader["IdBorne"];
+                    borne.DateMiseEnService = (DateTime)reader["DateMiseEnService"];
+                    borne.DerniereMaintenance = (DateTime)reader["DerniereMaintenance"];
+                    borne.TypeCharge = (string)reader["TypeCharge"];
                     results.Add(borne);
                     
                 }
@@ -93,14 +103,7 @@ namespace project_ebis.Services
         }
         public ObservableCollection<JournalIncident> ExecuteSelectQueryForJournauxIncidents(MySqlConnection connection)
         {
-            try
-            {
-                if (connection.State != ConnectionState.Open)
-                {
-                    connection.Open();
-                }
-
-                MySqlCommand command = new MySqlCommand("SELECT ti.libelle as TypeIncident, i.detail tas Detail, CONCAT(i.mois,'/',i.jour,'/',i.annee,' ',i.heures,':00') as DateIncident, i.idborne as IdBorne,i.id as IdIncident FROM incident i JOIN typeincident ti ON i.idtypeincident = ti.id ORDER BY i.annee DESC,i.mois DESC,i.jour DESC,i.heures DESC;", connection);
+MySqlCommand command = new MySqlCommand("SELECT ti.libelle as TypeIncident, i.detail tas Detail, CONCAT(i.mois,'/',i.jour,'/',i.annee,' ',i.heures,':00') as DateIncident, i.idborne as IdBorne,i.id as IdIncident FROM incident i JOIN typeincident ti ON i.idtypeincident = ti.id ORDER BY i.annee DESC,i.mois DESC,i.jour DESC,i.heures DESC;", connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 ObservableCollection<JournalIncident> results = new();
@@ -116,6 +119,45 @@ namespace project_ebis.Services
                         IdBorne = (int)reader[3]
                     };
                     results.Add(journalIncident);
+        }
+                        }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<ObservableCollection<Operation>> GetJournalOperation(MySqlConnection connection, int idBorne)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+
+                MySqlCommand command = new MySqlCommand("SELECT "+
+                    "oc.dateheuredebut   AS DateDebut,"+
+                    "oc.numoperation     AS IdOperation "+
+                    "FROM operationrechargement oc "+
+                    "INNER JOIN borne b ON oc.idborne = b.id "+
+                    "WHERE b.id = @id",connection);
+                command.Parameters.AddWithValue("@id", idBorne);
+
+                MySqlDataReader reader = await command.ExecuteReaderAsync();
+                var results = new ObservableCollection<Operation>();
+
+                while (reader.Read())
+                {
+                    var operation = new Operation();
+                    operation.DateDebut = (DateTime)reader["DateDebut"];
+                    operation.IdOperation = (int)reader["IdOperation"];
+                    results.Add(operation);
 
                 }
 
