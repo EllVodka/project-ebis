@@ -62,7 +62,6 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="View\JournauxIncidentPage.xaml">
-	  <MauiXaml Update="View\BornePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\MainPage.xaml">
