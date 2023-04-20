@@ -27,7 +27,7 @@ namespace project_ebis.ViewModel
         [RelayCommand]
         async Task OpenMap()
         {
-            await Map.Default.OpenAsync(1,2);
+            await Map.Default.OpenAsync(Borne.Latitude,Borne.Longitude);
         }
 
         [RelayCommand]
@@ -50,6 +50,20 @@ namespace project_ebis.ViewModel
 
             conn.Close();
             EstOccupe = false;
+        }
+
+        [RelayCommand]
+        async Task GoToOperation(Operation operation)
+        {
+            await Shell.Current.GoToAsync(
+                "OperationPage",
+                true,
+                new Dictionary<string, object>
+                {
+                    {
+                    "Operation", operation
+                    }
+                });
         }
     }
 }

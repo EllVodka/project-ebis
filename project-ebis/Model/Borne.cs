@@ -14,6 +14,8 @@ namespace project_ebis.Model
         public DateTime DateMiseEnService { get; set; }    
         public DateTime DerniereMaintenance { get; set; } 
         public string TypeCharge { get; set; }  
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
 
     }
 }
