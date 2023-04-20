@@ -7,29 +7,26 @@
              x:Class="project_ebis.View.JournauxIncidentPage"
              Title="Journaux d'incidents">
 
-    <Grid ColumnDefinitions="*,*">
-        <CollectionView ItemsSource="{Binding JournauxIncidents}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:JournalIncident">
-                    <VerticalStackLayout>
-                        <HorizontalStackLayout BackgroundColor="Red">
-                            <Label Text="{Binding DateIncident}"
+    <Grid>
+        <CollectionView VerticalOptions="Center" HorizontalOptions="Center" ItemsSource="{Binding JournauxIncidents}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:JournalIncident">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout BackgroundColor="Red" VerticalOptions="Center" HorizontalOptions="Center" Margin="20,0,0,0">
+                        <Label Text="{Binding DateIncident}"
                                    Padding="10"
                                TextColor="White"/>
-                            <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
+                        <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
                                     Padding="10"
                                TextColor="White"/>
-                            <Label Text="{Binding TypeIncident}"
+                        <Label Text="{Binding TypeIncident}"
                                     Padding="10"
                                TextColor="White"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
-    
-    
-    
-    
+
 </ContentPage>

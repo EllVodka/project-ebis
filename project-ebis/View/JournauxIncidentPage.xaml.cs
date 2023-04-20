@@ -8,6 +8,7 @@ public partial class JournauxIncidentPage : ContentPage
 	public JournauxIncidentPage(JournauxIncidentViewModel viewModel)
 	{
 		InitializeComponent();
+		viewModel.GetAllJounauxIncidents();
 		BindingContext = viewModel;
 	}
 }

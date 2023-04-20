@@ -110,7 +110,7 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT ti.libelle as TypeIncident, i.detail tas Detail, CONCAT(i.mois,'/',i.jour,'/',i.annee,' ',i.heures,':00') as DateIncident, i.idborne as IdBorne,i.id as IdIncident FROM incident i JOIN typeincident ti ON i.idtypeincident = ti.id ORDER BY i.annee DESC,i.mois DESC,i.jour DESC,i.heures DESC;", connection);
+                MySqlCommand command = new MySqlCommand("SELECT ti.libelle as TypeIncident, i.detail as Detail, CONCAT(i.mois,'/',i.jour,'/',i.annee,' ',i.heures,':00') as DateIncident, i.idborne as IdBorne,i.id as IdIncident FROM incident i JOIN typeincident ti ON i.idtypeincident = ti.id ORDER BY i.annee DESC,i.mois DESC,i.jour DESC,i.heures DESC;", connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 ObservableCollection<JournalIncident> results = new();
@@ -120,10 +120,10 @@ namespace project_ebis.Services
                 {
                     var journalIncident = new JournalIncident
                     {
-                        TypeIncident = (string)reader[0],
-                        DetailIncident = (DateTime)reader[1],
-                        DateIncident = (DateTime)reader[2],
-                        IdBorne = (int)reader[3]
+                        TypeIncident = (string)reader["TypeIncident"],
+                        DetailIncident = (string)reader["Detail"],
+                        DateIncident = (string)reader["DateIncident"],
+                        IdBorne = (int)reader["IdBorne"]
                     };
                     results.Add(journalIncident);
                 }

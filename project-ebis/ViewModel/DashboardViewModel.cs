@@ -47,6 +47,15 @@ namespace project_ebis.ViewModel
                 });
         }
 
+        [RelayCommand]
+        async Task GoToJournauxIncidents()
+        {
+            await Shell.Current.GoToAsync(
+                "JournauxIncidentPage",
+                true
+               );
+        }
+
 
     }
 }

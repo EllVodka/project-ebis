@@ -20,8 +20,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<JournauxIncidentPage>();
-        
-		
+        builder.Services.AddSingleton<JournauxIncidentViewModel>();
 		builder.Services.AddSingleton<DashboardViewModel>();
 		builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddTransient<BorneViewModels>();
