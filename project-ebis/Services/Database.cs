@@ -111,8 +111,8 @@ namespace project_ebis.Services
                     var journalIncident = new JournalIncident
                     {
                         TypeIncident = (string)reader[0],
-                        DetailIncident = (string)reader[1],
-                        DateIncident = (string)reader[2],
+                        DetailIncident = (DateTime)reader[1],
+                        DateIncident = (DateTime)reader[2],
                         IdBorne = (int)reader[3]
                     };
                     results.Add(journalIncident);

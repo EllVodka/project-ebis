@@ -10,7 +10,7 @@ namespace project_ebis.Model
     {
         public int IdBorne { get; set; }
         public string TypeIncident { get; set; }
-        public string DateIncident { get; set; }
-        public string DetailIncident { get; set; }
+        public DateTime DateIncident { get; set; }
+        public DateTime DetailIncident { get; set; }
     }
 }

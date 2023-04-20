@@ -11,17 +11,19 @@
         <CollectionView ItemsSource="{Binding JournauxIncidents}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:JournalIncident">
-                    <HorizontalStackLayout BackgroundColor="Red">
-                        <Label Text="{Binding DateIncident}"
-                               Padding="10"
-                           TextColor="White"/>
-                        <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
-                                Padding="10"
-                           TextColor="White"/>
-                        <Label Text="{Binding TypeIncident}"
-                                Padding="10"
-                           TextColor="White"/>
-                    </HorizontalStackLayout>
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout BackgroundColor="Red">
+                            <Label Text="{Binding DateIncident}"
+                                   Padding="10"
+                               TextColor="White"/>
+                            <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
+                                    Padding="10"
+                               TextColor="White"/>
+                            <Label Text="{Binding TypeIncident}"
+                                    Padding="10"
+                               TextColor="White"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
