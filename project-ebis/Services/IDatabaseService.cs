@@ -10,6 +10,7 @@ namespace project_ebis.Services
         ObservableCollection<string> ExecuteSelectQuery(string selectQuery, MySqlConnection connection);
         ObservableCollection<Borne> ExecuteSelectQueryForBorne(MySqlConnection connection);
         Task<ObservableCollection<Operation>> GetJournalOperation(MySqlConnection connection, int idBorne);
+        ObservableCollection<Entretien> GetJournalEntretien(MySqlConnection connection);
 
     }
 

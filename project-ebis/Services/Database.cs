@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Microsoft.Maui.Controls;
+using MySqlConnector;
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -139,6 +140,53 @@ namespace project_ebis.Services
                     operation.KwHConsomme = (int)reader["KwHConsommer"];
                     operation.IdBorne = (int)reader["IdBorne"];
                     results.Add(operation);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public ObservableCollection<Entretien> GetJournalEntretien(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT "+
+                    "CONCAT(ent.jour, '/', ent.mois, '/', ent.annee, ' ', ent.heure, ':00')     AS DateEntretien," +
+                    "st.id                                                                      AS IdStation," +
+                    "b.id                                                                       AS IdBorne," +
+                    "ent.id                                                                     AS IdEntretien," +
+                    "t.prenom                                                                   AS PrenomTechnicien,"+
+                    "t.nom                                                                      AS NomTechnicien "+
+                    "FROM entretien ent "+
+                    "INNER JOIN technicien t ON ent.idtechnicien = t.id "+
+                    "INNER JOIN secteur s ON s.id = t.idsecteur "+
+                    "INNER JOIN station st ON st.idsecteur = s.id "+
+                    "INNER JOIN borne b ON b.idstation = st.id "+
+                    "ORDER BY ent.annee DESC, ent.mois DESC, ent.jour DESC, ent.heure DESC; ",connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                var results = new ObservableCollection<Entretien>();
+
+                while (reader.Read())
+                {
+                    var entretien = new Entretien();
+                    entretien.DateEntretien = (string)reader["DateEntretien"];
+                    entretien.IdStation = (int)reader["IdStation"];
+                    entretien.IdEntretien = (int)reader["IdEntretien"];
+                    entretien.IdBorne = (int)reader["IdBorne"];
+                    entretien.PrenomTechnicien = (string)reader["PrenomTechnicien"];
+                    entretien.NomTechnicien = (string)reader["NomTechnicien"];
+                    results.Add(entretien);
                 }
 
                 return results;

@@ -56,7 +56,10 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 TextColor="White"
-                BackgroundColor="Blue"/>
+                BackgroundColor="Blue"
+                Command="{Binding Source={RelativeSource 
+                    AncestorType={x:Type vm:DashboardViewModel}},
+                    Path=GoToEntretienCommand}"/>
 
         <Button Grid.Row="2"
                 Grid.Column="2"
