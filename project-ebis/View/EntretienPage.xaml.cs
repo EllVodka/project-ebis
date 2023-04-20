@@ -2,12 +2,11 @@ using project_ebis.ViewModel;
 
 namespace project_ebis.View;
 
-public partial class MainPage : ContentPage
+public partial class EntretienPage : ContentPage
 {
-	public MainPage(DashboardViewModel viewModel)
+	public EntretienPage(EntretienViewModel viewModel)
 	{
 		InitializeComponent();
-		viewModel.GetAllBorne();
 		BindingContext = viewModel;
 	}
 }

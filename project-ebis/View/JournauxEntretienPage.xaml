@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="project_ebis.View.JournauxEntretienPage"
+             xmlns:model="clr-namespace:project_ebis.Model"
+             xmlns:vm="clr-namespace:project_ebis.ViewModel"
+             x:DataType="vm:JournauxEntretiensViewModel"
+             Title="Journal Entretien">
+    <CollectionView Grid.Column="1" Grid.Row="0" 
+                    ItemsSource="{Binding journalEntretien}" 
+                    BackgroundColor="Red"
+                    ItemsLayout="VerticalGrid, 2">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Entretien">
+                <HorizontalStackLayout Padding="10" BackgroundColor="Blue">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                                 Command="{Binding Source={RelativeSource 
+                                AncestorType={x:Type vm:JournauxEntretiensViewModel}},
+                                Path=GoToEntretienCommand}"
+                                CommandParameter="{Binding .}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <Label Padding="10,0,0,0" Text="{Binding DateEntretien}" TextColor="White"/>
+                    <Label Padding="10,0,0,0" Text="{Binding IdStation}" TextColor="White"/>
+                    <Label Padding="10,0,0,0" Text="{Binding IdBorne}" TextColor="White"/>
+                </HorizontalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

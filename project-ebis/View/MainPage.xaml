@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:project_ebis.Model"
              xmlns:vm="clr-namespace:project_ebis.ViewModel"
-             x:DataType="vm:StatViewModel"
+             x:DataType="vm:DashboardViewModel"
              x:Class="project_ebis.View.MainPage"
              Title="Dashboard">
 
@@ -20,19 +20,25 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Borne">
                     <HorizontalStackLayout>
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                 Command="{Binding Source={RelativeSource 
+                                AncestorType={x:Type vm:DashboardViewModel}},
+                                Path=GoToBorneCommand}"
+                                CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
                         <Label Text="{Binding NomSecteur}"
                                Padding="10"
                            TextColor="White"/>
                         <Label Text="{Binding NomStation}"
                                 Padding="10"
                            TextColor="White"/>
-                        <Label Text="{Binding idBorne, StringFormat='Borne-{0}'}"
+                        <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
                                 Padding="10"
                            TextColor="White"/>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
         <BoxView Grid.Row="1"
                  Grid.RowSpan="2"
@@ -49,7 +55,10 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 TextColor="White"
-                BackgroundColor="Blue"/>
+                BackgroundColor="Blue"
+                Command="{Binding Source={RelativeSource 
+                    AncestorType={x:Type vm:DashboardViewModel}},
+                    Path=GoToEntretienCommand}"/>
 
         <Button Grid.Row="2"
                 Grid.Column="2"
@@ -57,7 +66,9 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 TextColor="White"
-                BackgroundColor="Red"/>
+                BackgroundColor="Red"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}},
+                          Path=GoToJournauxIncidentsCommand}"/>
 
     </Grid>
 </ContentPage>
