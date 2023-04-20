@@ -2,6 +2,7 @@
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Globalization;
 using Debug = System.Diagnostics.Debug;
 
 namespace project_ebis.Services
@@ -103,6 +104,41 @@ namespace project_ebis.Services
                 return null;
             }
         }
+        public ObservableCollection<JournalIncident> ExecuteSelectQueryForJournauxIncidents(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT ti.libelle as TypeIncident, i.detail as Detail, CONCAT(i.mois,'/',i.jour,'/',i.annee,' ',i.heures,':00') as DateIncident, i.idborne as IdBorne,i.id as IdIncident FROM incident i JOIN typeincident ti ON i.idtypeincident = ti.id ORDER BY i.annee DESC,i.mois DESC,i.jour DESC,i.heures DESC;", connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                ObservableCollection<JournalIncident> results = new();
+
+
+                while (reader.Read())
+                {
+                    var journalIncident = new JournalIncident
+                    {
+                        TypeIncident = (string)reader["TypeIncident"],
+                        DetailIncident = (string)reader["Detail"],
+                        DateIncident = (string)reader["DateIncident"],
+                        IdBorne = (int)reader["IdBorne"]
+                    };
+                    results.Add(journalIncident);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
 
         public async Task<ObservableCollection<Operation>> GetJournalOperation(MySqlConnection connection, int idBorne)
         {
@@ -112,6 +148,7 @@ namespace project_ebis.Services
                 {
                     connection.Open();
                 }
+
 
                 MySqlCommand command = new MySqlCommand("SELECT "+
                     "oc.dateheuredebut      AS DateDebut,"+
@@ -139,6 +176,7 @@ namespace project_ebis.Services
                     operation.KwHConsomme = (int)reader["KwHConsommer"];
                     operation.IdBorne = (int)reader["IdBorne"];
                     results.Add(operation);
+
                 }
 
                 return results;

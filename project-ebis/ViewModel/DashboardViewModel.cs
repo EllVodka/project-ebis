@@ -42,6 +42,16 @@ public partial class DashboardViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task GoToJournauxIncidents()
+    {
+        await Shell.Current.GoToAsync(
+            "JournauxIncidentPage",
+            true
+           );
+    }
+
+
+    [RelayCommand]
     async Task GoToEntretien()
     {
         await Shell.Current.GoToAsync(nameof(JournauxEntretienPage), true);

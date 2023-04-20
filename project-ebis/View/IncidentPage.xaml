@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="project_ebis.View.IncidentPage"
+             xmlns:model="clr-namespace:project_ebis.Model"
+             xmlns:vm="clr-namespace:project_ebis.ViewModel"
+             x:DataType="vm:IncidentViewModel"
+             Title="{Binding Incident.DateIncident, StringFormat= 'Incident du {0}' }">
+    
+    
+    <VerticalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="{Binding Incident.TypeIncident, StringFormat='Type incident : {0}'}"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="{Binding Incident.DetailIncident, StringFormat='Détail incident : {0}'}"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+
+
+</ContentPage>
