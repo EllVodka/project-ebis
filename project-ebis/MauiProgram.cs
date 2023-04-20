@@ -1,4 +1,6 @@
-﻿using project_ebis.View;
+﻿using project_ebis.Services;
+using project_ebis.View;
+using project_ebis.ViewModel;
 
 namespace project_ebis;
 
@@ -17,6 +19,12 @@ public static class MauiProgram
 
 
         builder.Services.AddSingleton<MainPage>();
+        
+		
+		builder.Services.AddSingleton<DashboardViewModel>();
+		builder.Services.AddSingleton<DatabaseService>();
+        builder.Services.AddTransient<BorneViewModels>();
+        builder.Services.AddTransient<BornePage>();
 
         return builder.Build();
 	}
