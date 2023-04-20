@@ -15,6 +15,8 @@ namespace project_ebis.ViewModel
 
         public ObservableCollection<Operation> journalOperation { get; set; } = new();
 
+        public ObservableCollection<ElementFiable> moyenneIncident { get; set; } = new();
+
         DatabaseService databaseService { get; set; }
         MySqlConnection conn { get; set; }
 

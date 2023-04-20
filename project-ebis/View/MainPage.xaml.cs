@@ -6,8 +6,10 @@ public partial class MainPage : ContentPage
 {
 	public MainPage(DashboardViewModel viewModel)
 	{
-		InitializeComponent();
+        InitializeComponent();
 		viewModel.GetAllBorne();
+		viewModel.GetElementFiable();
+		viewModel.GetElementDefecteux();
 		BindingContext = viewModel;
 	}
 }

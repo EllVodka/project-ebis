@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:project_ebis.ViewModel"
              x:DataType="vm:EntretienViewModel"
              Title="{Binding Entretien.DateEntretien, StringFormat='Entretien du {0}'}">
+    
     <VerticalStackLayout>
         <HorizontalStackLayout>
             <Label Text="{Binding Entretien.NomTechnicien,StringFormat='Technicien : {0} '}" Padding="0,0,10,0"/>

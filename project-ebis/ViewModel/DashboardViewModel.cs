@@ -10,6 +10,8 @@ namespace project_ebis.ViewModel;
 public partial class DashboardViewModel : BaseViewModel
 {
     public ObservableCollection<Borne> Bornes { get; set; } = new();
+    public ObservableCollection<ElementFiable> elementFiables { get; set; } = new();
+    public ObservableCollection<ElementDefecteux> elementDefecteux { get; set; } = new();
 
     DatabaseService databaseService { get; set; }
     MySqlConnection conn { get; set; }
@@ -18,13 +20,26 @@ public partial class DashboardViewModel : BaseViewModel
     public DashboardViewModel()
     {
         this.databaseService = new DatabaseService("localhost", "ebis", 3306, "root", "root");
-        this.conn = this.databaseService.CreateConnection();
+        this.conn = this.databaseService.CreateConnection();   
     }
 
     public void GetAllBorne()
     {            
         Bornes = this.databaseService.ExecuteSelectQueryForBorne(conn);
-        conn.Close();
+        this.conn.Close();  
+        
+    }
+
+    public void GetElementFiable()
+    {
+        elementFiables =  this.databaseService.GetElementFiables(conn);
+        this.conn.Close();
+    }
+
+    public void GetElementDefecteux()
+    {
+        elementDefecteux = this.databaseService.GetElementDefecteux(conn);
+        this.conn.Close();
     }
 
     [RelayCommand]

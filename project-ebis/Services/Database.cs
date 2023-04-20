@@ -12,10 +12,10 @@ namespace project_ebis.Services
         private string connectionString;
         private MySqlConnection connection;
 
-        public DatabaseService(string host, string database,int port, string user, string password)
+        public DatabaseService(string host, string database, int port, string user, string password)
         {
             this.connectionString = $"server={host};user={user};database={database};port={port};password={password};";
-        }   
+        }
 
         public MySqlConnection CreateConnection()
         {
@@ -62,27 +62,27 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT "+
-                    "s.libelle                  AS NomSecteur,"+
-                    "st.adresseville            AS NomStation,"+
-                    "b.id                       AS IdBorne,"+
-                    "b.datemiseenservice        AS DateMiseEnService,"+
+                MySqlCommand command = new MySqlCommand("SELECT " +
+                    "s.libelle                  AS NomSecteur," +
+                    "st.adresseville            AS NomStation," +
+                    "b.id                       AS IdBorne," +
+                    "b.datemiseenservice        AS DateMiseEnService," +
                     "b.datederniererevision     AS DerniereMaintenance," +
-                    "tc.libelletypecharge       AS TypeCharge, "+
-                    "st.latitude                AS Latitude,"+
-                    "st.longitude               AS Longitude "+
+                    "tc.libelletypecharge       AS TypeCharge, " +
+                    "st.latitude                AS Latitude," +
+                    "st.longitude               AS Longitude " +
                     "FROM secteur s " +
-                    "INNER JOIN station st ON s.id = st.idsecteur "+
-                    "INNER JOIN borne b ON b.idstation = st.id "+
-                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge;",connection);
+                    "INNER JOIN station st ON s.id = st.idsecteur " +
+                    "INNER JOIN borne b ON b.idstation = st.id " +
+                    "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge;", connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 ObservableCollection<Borne> results = new ObservableCollection<Borne>();
-            
+
 
                 while (reader.Read())
                 {
-                var borne = new Borne(); 
+                    var borne = new Borne();
                     borne.NomSecteur = (string)reader["NomSecteur"];
                     borne.NomStation = (string)reader["NomStation"];
                     borne.IdBorne = (int)reader["IdBorne"];
@@ -92,7 +92,7 @@ namespace project_ebis.Services
                     borne.Latitude = (float)reader["Latitude"];
                     borne.Longitude = (float)reader["Longitude"];
                     results.Add(borne);
-                    
+
                 }
 
 
@@ -150,17 +150,17 @@ namespace project_ebis.Services
                 }
 
 
-                MySqlCommand command = new MySqlCommand("SELECT "+
-                    "oc.dateheuredebut      AS DateDebut,"+
-                    "oc.dateheurefin         AS DateFin,"+
-                    "oc.numoperation        AS IdOperation,"+
-                    "tc.libelletypecharge    AS TypeCharge,"+
-                    "oc.nbkwheures           AS KwHConsommer, "+
+                MySqlCommand command = new MySqlCommand("SELECT " +
+                    "oc.dateheuredebut      AS DateDebut," +
+                    "oc.dateheurefin         AS DateFin," +
+                    "oc.numoperation        AS IdOperation," +
+                    "tc.libelletypecharge    AS TypeCharge," +
+                    "oc.nbkwheures           AS KwHConsommer, " +
                     "b.id as IdBorne " +
-                    "FROM operationrechargement oc "+
-                    "INNER JOIN borne b ON oc.idborne = b.id "+
-                    "INNER JOIN typecharge tc ON tc.codetypecharge = b.codetypecharge "+
-                    "WHERE b.id = @id; ",connection);
+                    "FROM operationrechargement oc " +
+                    "INNER JOIN borne b ON oc.idborne = b.id " +
+                    "INNER JOIN typecharge tc ON tc.codetypecharge = b.codetypecharge " +
+                    "WHERE b.id = @id; ", connection);
                 command.Parameters.AddWithValue("@id", idBorne);
 
                 MySqlDataReader reader = await command.ExecuteReaderAsync();
@@ -197,19 +197,19 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT "+
+                MySqlCommand command = new MySqlCommand("SELECT " +
                     "CONCAT(ent.jour, '/', ent.mois, '/', ent.annee, ' ', ent.heure, ':00')     AS DateEntretien," +
                     "st.id                                                                      AS IdStation," +
                     "b.id                                                                       AS IdBorne," +
                     "ent.id                                                                     AS IdEntretien," +
-                    "t.prenom                                                                   AS PrenomTechnicien,"+
-                    "t.nom                                                                      AS NomTechnicien "+
-                    "FROM entretien ent "+
-                    "INNER JOIN technicien t ON ent.idtechnicien = t.id "+
-                    "INNER JOIN secteur s ON s.id = t.idsecteur "+
-                    "INNER JOIN station st ON st.idsecteur = s.id "+
-                    "INNER JOIN borne b ON b.idstation = st.id "+
-                    "ORDER BY ent.annee DESC, ent.mois DESC, ent.jour DESC, ent.heure DESC; ",connection);
+                    "t.prenom                                                                   AS PrenomTechnicien," +
+                    "t.nom                                                                      AS NomTechnicien " +
+                    "FROM entretien ent " +
+                    "INNER JOIN technicien t ON ent.idtechnicien = t.id " +
+                    "INNER JOIN secteur s ON s.id = t.idsecteur " +
+                    "INNER JOIN station st ON st.idsecteur = s.id " +
+                    "INNER JOIN borne b ON b.idstation = st.id " +
+                    "ORDER BY ent.annee DESC, ent.mois DESC, ent.jour DESC, ent.heure DESC; ", connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
                 var results = new ObservableCollection<Entretien>();
@@ -234,7 +234,7 @@ namespace project_ebis.Services
                 return null;
             }
         }
-        public async Task<ObservableCollection<ElementVerif>> GetElementVerif(MySqlConnection connection,int idEntretien)
+        public async Task<ObservableCollection<ElementVerif>> GetElementVerif(MySqlConnection connection, int idEntretien)
         {
             try
             {
@@ -243,11 +243,11 @@ namespace project_ebis.Services
                     connection.Open();
                 }
 
-                MySqlCommand command = new MySqlCommand("SELECT e.libelle AS Libelle ,ISNULL(de.annee) AS annee "+
-                    "FROM element e "+
-                    "INNER JOIN detailentretien de ON de.idElement = e.id "+
-                    "INNER JOIN entretien ent ON ent.id = de.idEntretien "+
-                    "WHERE ent.id = @idEntretien; ",connection);
+                MySqlCommand command = new MySqlCommand("SELECT e.libelle AS Libelle ,ISNULL(de.annee) AS annee " +
+                    "FROM element e " +
+                    "INNER JOIN detailentretien de ON de.idElement = e.id " +
+                    "INNER JOIN entretien ent ON ent.id = de.idEntretien " +
+                    "WHERE ent.id = @idEntretien; ", connection);
                 command.Parameters.AddWithValue("@idEntretien", idEntretien);
 
                 MySqlDataReader reader = await command.ExecuteReaderAsync();
@@ -269,6 +269,80 @@ namespace project_ebis.Services
                 return null;
             }
         }
-    }
 
+        public ObservableCollection<ElementFiable> GetElementFiables(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT e.libelle, COUNT(0) as total " +
+                    "FROM element e " +
+                    "INNER JOIN detailentretien de ON de.idElement = e.id " +
+                    "WHERE de.annee IS NOT NULL AND de.annee >= YEAR(NOW())-5 " +
+                    "GROUP BY e.libelle " +
+                    "ORDER BY total ASC " +
+                    "LIMIT 5;" , connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                var results = new ObservableCollection<ElementFiable>();
+
+                while (reader.Read())
+                {
+                    var element = new ElementFiable();
+                    element.NomElement = (string)reader["libelle"];
+                    element.NbIncident = (int)(long)reader["total"];
+                    results.Add(element);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public ObservableCollection<ElementDefecteux> GetElementDefecteux(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT e.libelle, COUNT(0) as total " +
+                    "FROM element e " +
+                    "INNER JOIN detailentretien de ON de.idElement = e.id " +
+                    "WHERE de.annee IS NOT NULL AND de.annee >= YEAR(NOW())-5 " +
+                    "GROUP BY e.libelle " +
+                    "ORDER BY total DESC " +
+                    "LIMIT 5;" , connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                var results = new ObservableCollection<ElementDefecteux>();
+
+                while (reader.Read())
+                {
+                    var element = new ElementDefecteux();
+                    element.NomElement = (string)reader["libelle"];
+                    element.NbIncident = (int)(long)reader["total"];
+                    results.Add(element);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+    }
 }
