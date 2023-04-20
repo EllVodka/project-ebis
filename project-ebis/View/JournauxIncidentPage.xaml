@@ -12,8 +12,18 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:JournalIncident">
                 <VerticalStackLayout>
-                    <HorizontalStackLayout BackgroundColor="Red" VerticalOptions="Center" HorizontalOptions="Center" Margin="20,0,0,0">
-                        <Label Text="{Binding DateIncident}"
+                    <HorizontalStackLayout BackgroundColor="Red" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Center" 
+                                           Margin="20,0,0,0">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                 Command="{Binding Source={RelativeSource 
+                                AncestorType={x:Type vm:JournauxIncidentViewModel}},
+                                Path=GoToIncidentCommand}"
+                                CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Label Text="{Binding DateIncident}"
                                    Padding="10"
                                TextColor="White"/>
                         <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"

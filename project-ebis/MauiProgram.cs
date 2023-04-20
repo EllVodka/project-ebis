@@ -23,8 +23,12 @@ public static class MauiProgram
         builder.Services.AddSingleton<JournauxIncidentViewModel>();
 		builder.Services.AddSingleton<DashboardViewModel>();
 		builder.Services.AddSingleton<DatabaseService>();
+
+
+		builder.Services.AddTransient<IncidentViewModel>();
         builder.Services.AddTransient<BorneViewModels>();
         builder.Services.AddTransient<BornePage>();
+		builder.Services.AddTransient<IncidentPage>();
 
         return builder.Build();
 	}
