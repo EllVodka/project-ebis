@@ -27,7 +27,7 @@ namespace project_ebis.ViewModel
         [RelayCommand]
         async Task OpenMap()
         {
-            await Map.Default.OpenAsync(1,2);
+            await Map.Default.OpenAsync(Borne.Latitude,Borne.Longitude);
         }
 
         [RelayCommand]

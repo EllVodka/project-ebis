@@ -67,8 +67,10 @@ namespace project_ebis.Services
                     "b.id                       AS IdBorne,"+
                     "b.datemiseenservice        AS DateMiseEnService,"+
                     "b.datederniererevision     AS DerniereMaintenance," +
-                    "tc.libelletypecharge       AS TypeCharge "+
-                    "FROM secteur s "+
+                    "tc.libelletypecharge       AS TypeCharge, "+
+                    "st.latitude                AS Latitude,"+
+                    "st.longitude               AS Longitude "+
+                    "FROM secteur s " +
                     "INNER JOIN station st ON s.id = st.idsecteur "+
                     "INNER JOIN borne b ON b.idstation = st.id "+
                     "INNER JOIN typecharge tc ON b.codetypecharge = tc.codetypecharge;",connection);
@@ -86,6 +88,8 @@ namespace project_ebis.Services
                     borne.DateMiseEnService = (DateTime)reader["DateMiseEnService"];
                     borne.DerniereMaintenance = (DateTime)reader["DerniereMaintenance"];
                     borne.TypeCharge = (string)reader["TypeCharge"];
+                    borne.Latitude = (float)reader["Latitude"];
+                    borne.Longitude = (float)reader["Longitude"];
                     results.Add(borne);
                     
                 }
