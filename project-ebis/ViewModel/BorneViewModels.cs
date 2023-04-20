@@ -51,5 +51,19 @@ namespace project_ebis.ViewModel
             conn.Close();
             EstOccupe = false;
         }
+
+        [RelayCommand]
+        async Task GoToOperation(Operation operation)
+        {
+            await Shell.Current.GoToAsync(
+                "OperationPage",
+                true,
+                new Dictionary<string, object>
+                {
+                    {
+                    "Operation", operation
+                    }
+                });
+        }
     }
 }
