@@ -5,11 +5,20 @@
              xmlns:model="clr-namespace:project_ebis.Model"
              xmlns:vm="clr-namespace:project_ebis.ViewModel"
              x:DataType="vm:OperationViewModel"
-             Title="OperationPage">
+             Title="{Binding Operation.IdBorne, StringFormat='Journal opération pour la borne n°{0}'}">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            Text="{Binding Operation.TypeCharge,
+            StringFormat='Type de charge : {0}'}"
+            TextColor="White" />
+        <Label 
+            Text="{Binding Operation.DateDebut,
+            StringFormat='Debut de charge : {0}'}" TextColor="White" />
+        <Label 
+            Text="{Binding Operation.DateFin,
+            StringFormat='Fin de charge : {0}'}" TextColor="White" />
+        <Label 
+            Text="{Binding Operation.KwHConsomme,
+            StringFormat='KilWatt/Heure consommé : {0}'}" TextColor="White" />
     </VerticalStackLayout>
 </ContentPage>

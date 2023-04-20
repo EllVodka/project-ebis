@@ -131,8 +131,8 @@ namespace project_ebis.Services
                     operation.DateDebut = (DateTime)reader["DateDebut"];
                     operation.DateFin = (DateTime)reader["DateFin"];
                     operation.IdOperation = (int)reader["IdOperation"];
-                    operation.IdOperation = (int)reader["TypeCharge"];
-                    operation.IdOperation = (int)reader["KwHConsommer"];
+                    operation.TypeCharge = (string)reader["TypeCharge"];
+                    operation.KwHConsomme = (int)reader["KwHConsommer"];
                     operation.IdBorne = (int)reader["IdBorne"];
                     results.Add(operation);
                 }
