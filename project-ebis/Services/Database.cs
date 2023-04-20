@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using MySqlConnector;
+﻿using MySqlConnector;
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -111,11 +110,16 @@ namespace project_ebis.Services
                 }
 
                 MySqlCommand command = new MySqlCommand("SELECT "+
-                    "oc.dateheuredebut   AS DateDebut,"+
-                    "oc.numoperation     AS IdOperation "+
+                    "oc.dateheuredebut      AS DateDebut,"+
+                    "oc.dateheurefin         AS DateFin,"+
+                    "oc.numoperation        AS IdOperation,"+
+                    "tc.libelletypecharge    AS TypeCharge,"+
+                    "oc.nbkwheures           AS KwHConsommer, "+
+                    "b.id as IdBorne " +
                     "FROM operationrechargement oc "+
                     "INNER JOIN borne b ON oc.idborne = b.id "+
-                    "WHERE b.id = @id",connection);
+                    "INNER JOIN typecharge tc ON tc.codetypecharge = b.codetypecharge "+
+                    "WHERE b.id = @id; ",connection);
                 command.Parameters.AddWithValue("@id", idBorne);
 
                 MySqlDataReader reader = await command.ExecuteReaderAsync();
@@ -125,7 +129,11 @@ namespace project_ebis.Services
                 {
                     var operation = new Operation();
                     operation.DateDebut = (DateTime)reader["DateDebut"];
+                    operation.DateFin = (DateTime)reader["DateFin"];
                     operation.IdOperation = (int)reader["IdOperation"];
+                    operation.IdOperation = (int)reader["TypeCharge"];
+                    operation.IdOperation = (int)reader["KwHConsommer"];
+                    operation.IdBorne = (int)reader["IdBorne"];
                     results.Add(operation);
                 }
 
