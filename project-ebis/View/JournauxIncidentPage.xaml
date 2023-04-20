@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:project_ebis.Model"
+             xmlns:vm="clr-namespace:project_ebis.ViewModel"
+             x:DataType="vm:JournauxIncidentViewModel"
+             x:Class="project_ebis.View.JournauxIncidentPage"
+             Title="Journaux d'incidents">
+
+    <Grid>
+        <CollectionView VerticalOptions="Center" HorizontalOptions="Center" ItemsSource="{Binding JournauxIncidents}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:JournalIncident">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout BackgroundColor="Red" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Center" 
+                                           Margin="20,0,0,0">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                 Command="{Binding Source={RelativeSource 
+                                AncestorType={x:Type vm:JournauxIncidentViewModel}},
+                                Path=GoToIncidentCommand}"
+                                CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Label Text="{Binding DateIncident}"
+                                   Padding="10"
+                               TextColor="White"/>
+                        <Label Text="{Binding IdBorne, StringFormat='Borne-{0}'}"
+                                    Padding="10"
+                               TextColor="White"/>
+                        <Label Text="{Binding TypeIncident}"
+                                    Padding="10"
+                               TextColor="White"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
