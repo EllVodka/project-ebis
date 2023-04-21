@@ -2,7 +2,6 @@
 using project_ebis.Model;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Globalization;
 using Debug = System.Diagnostics.Debug;
 
 namespace project_ebis.Services
@@ -332,6 +331,92 @@ namespace project_ebis.Services
                     var element = new ElementDefecteux();
                     element.NomElement = (string)reader["libelle"];
                     element.NbIncident = (int)(long)reader["total"];
+                    results.Add(element);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public ObservableCollection<IncidentMois> GetMoyenneIncident5Ans(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT ROUND(AVG(countAll),1) AS MoyenneIncidentParMois, CASE mois WHEN 1 THEN 'janvier' WHEN 2 THEN 'février' WHEN 3 THEN 'mars' WHEN 4 THEN 'avril'" +
+                   "          WHEN 5 THEN 'mai' WHEN 6 THEN 'juin' WHEN 7 THEN 'juillet' WHEN 8 THEN 'août' WHEN 9 THEN 'septembre' WHEN 10 THEN 'octobre' WHEN 11 THEN 'novembre'"+
+                   "          ELSE 'décembre'"+
+                   " END AS mois FROM"+
+                   " ("+
+                   "     SELECT count(0) AS countAll, annee, mois"+
+                   "     FROM incident"+
+                   "     WHERE annee >= YEAR(NOW()) - 5"+
+                   "     GROUP BY annee, mois"+
+                   " ) as counts"+
+                   " GROUP BY mois; " , connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                var results = new ObservableCollection<IncidentMois>();
+
+                while (reader.Read())
+                {
+                    var element = new IncidentMois();
+                    element.MoyenneIncidentMois = (decimal)reader["MoyenneIncidentParMois"];
+                    element.Mois = (string)reader["mois"];
+                    results.Add(element);
+                }
+
+                return results;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public ObservableCollection<FonctionnementMoyen> GetFonctionnementMoyenElement(MySqlConnection connection)
+        {
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT  ROUND(AVG(DATEDIFF(t2.dateEntretien, t1.dateEntretien)),0) AS MoyenneElement,libelle"+
+                   " FROM("+
+                   "   SELECT idElement, idEntretien, CONCAT(annee, '-', mois, '-', jour, ' ', heure) AS dateEntretien"+
+                   "   FROM detailentretien"+
+                   "   WHERE annee IS NOT NULL"+
+                   "   ORDER BY dateEntretien ASC"+
+                   " ) t1"+
+                   " INNER JOIN("+
+                   "   SELECT idElement, idEntretien, CONCAT(annee, '-', mois, '-', jour, ' ', heure) AS dateEntretien"+
+                   "   FROM detailentretien"+
+                   "   WHERE annee IS NOT NULL"+
+                   "   ORDER BY dateEntretien ASC"+
+                   " ) t2 ON t1.idElement = t2.idElement AND t1.idEntretien < t2.idEntretien"+
+                   " INNER JOIN element e ON t1.idElement = e.id"+
+                   " GROUP BY e.libelle; " , connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                var results = new ObservableCollection<FonctionnementMoyen>();
+
+                while (reader.Read())
+                {
+                    var element = new FonctionnementMoyen();
+                    element.MoyenneElement = (decimal)reader["MoyenneElement"];
+                    element.Libelle = (string)reader["libelle"];
                     results.Add(element);
                 }
 

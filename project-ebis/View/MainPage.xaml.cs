@@ -10,6 +10,8 @@ public partial class MainPage : ContentPage
 		viewModel.GetAllBorne();
 		viewModel.GetElementFiable();
 		viewModel.GetElementDefecteux();
-		BindingContext = viewModel;
+		viewModel.GetMoyenneIncident();
+		viewModel.GetFonctionnementMoyen();
+        BindingContext = viewModel;
 	}
 }

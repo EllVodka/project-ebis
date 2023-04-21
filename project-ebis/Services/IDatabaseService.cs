@@ -13,6 +13,10 @@ namespace project_ebis.Services
         Task<ObservableCollection<Operation>> GetJournalOperation(MySqlConnection connection, int idBorne);
         ObservableCollection<Entretien> GetJournalEntretien(MySqlConnection connection);
         Task<ObservableCollection<ElementVerif>> GetElementVerif(MySqlConnection connection, int idEntretien);
+        ObservableCollection<ElementFiable> GetElementFiables(MySqlConnection connection);
+        ObservableCollection<ElementDefecteux> GetElementDefecteux(MySqlConnection connection);
+        ObservableCollection<IncidentMois> GetMoyenneIncident5Ans(MySqlConnection connection);
+        ObservableCollection<FonctionnementMoyen> GetFonctionnementMoyenElement(MySqlConnection connection);
     }
 
 }

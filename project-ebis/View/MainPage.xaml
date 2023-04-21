@@ -9,32 +9,118 @@
 
     <Grid RowDefinitions="2*,*,*"
           ColumnDefinitions="*,*,*">
-        
-        <CollectionView ItemsSource="{Binding elementFiables}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:ElementFiable">
-                    <VerticalStackLayout>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding NomElement, StringFormat='Nom element : {0}'}"/>
-                            <Label Text="{Binding NbIncident, StringFormat=' - Nb incident : {0}'}"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
 
-        <CollectionView Grid.Column ="1" ItemsSource="{Binding elementDefecteux}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:ElementDefecteux">
-                    <VerticalStackLayout>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding NomElement, StringFormat='Nom element : {0}'}"/>
-                            <Label Text="{Binding NbIncident, StringFormat=' - Nb incident : {0}'}"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Grid Grid.Column="0" Grid.Row="0" RowDefinitions="20,*" ColumnDefinitions="*,*">
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                    Text="Element les plus fiable : "
+                HorizontalTextAlignment="Center"
+                    TextColor="White"/>
+            <CollectionView ItemsSource="{Binding elementFiables}" Grid.Row="1" Grid.Column="0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ElementDefecteux">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="{Binding NomElement}" Margin="0,0,20,0"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView ItemsSource="{Binding elementFiables}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ElementDefecteux">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="{Binding NbIncident}" Margin="0,0,20,0"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="0" RowDefinitions="20,*" ColumnDefinitions="*,*">
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                    Text="Element les plus defectueux : "
+                HorizontalTextAlignment="Center"
+                    TextColor="White"/>
+            <CollectionView ItemsSource="{Binding elementDefecteux}" Grid.Row="1" Grid.Column="0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ElementDefecteux">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="{Binding NomElement}" Margin="0,0,20,0"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView ItemsSource="{Binding elementDefecteux}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ElementDefecteux">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="{Binding NbIncident}" Margin="0,0,20,0"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.Row="1" RowDefinitions="20,*"  Grid.RowSpan="2" Margin="0,0,0,20">
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                    Text="Moyenne des incidents par mois sur les 5 derniéres années : "
+                HorizontalTextAlignment="Center"
+                    TextColor="White"/>
+            <CollectionView ItemsSource="{Binding moyenneIncident}" Grid.Row="1"  HorizontalOptions="Center">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:IncidentMois">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="{Binding Mois}" Margin="0,0,20,0"/>
+                                <Label 
+                                    Text="{Binding MoyenneIncidentMois}"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        
+        <Grid Grid.Column="1" Grid.Row="1" RowDefinitions="20,*"  Grid.RowSpan="2" Margin="0,0,0,20">
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                    Text="Fonctionnement moyen des elements sur les 5 derniere années : "
+                HorizontalTextAlignment="Center"
+                    TextColor="White"/>
+            <CollectionView ItemsSource="{Binding fonctionnementMoyen}" Grid.Row="1"  HorizontalOptions="Center">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FonctionnementMoyen">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="{Binding Libelle}" Margin="0,0,20,0"/>
+                                <Label 
+                                    Text="{Binding MoyenneElement, StringFormat='{0} jours'}"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
 
         <CollectionView Grid.Column="2"
                   ItemsSource="{Binding Bornes}">
@@ -61,14 +147,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <BoxView Grid.Row="1"
-                 Grid.RowSpan="2"
-                 Color="MediumPurple"/>
-        
-        <BoxView Grid.RowSpan="2"
-                 Grid.Column="1"
-                 Grid.Row="1"
-                 Color="BlanchedAlmond"/>
 
         <Button Grid.Row="1"
                 Grid.Column="2"
