@@ -35,7 +35,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Button
-            Text="Clique"
+            Text="Charger element verifié"
             Command="{Binding GetElementVerifCommand}"
             BorderWidth="3"
             VerticalOptions="Center"
