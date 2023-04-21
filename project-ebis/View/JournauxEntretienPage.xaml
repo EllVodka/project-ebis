@@ -8,7 +8,6 @@
              Title="Journal Entretien">
     <CollectionView Grid.Column="1" Grid.Row="0" 
                     ItemsSource="{Binding journalEntretien}" 
-                    BackgroundColor="Red"
                     ItemsLayout="VerticalGrid, 2">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:Entretien">
@@ -20,9 +19,9 @@
                                 Path=GoToEntretienCommand}"
                                 CommandParameter="{Binding .}"/>
                     </HorizontalStackLayout.GestureRecognizers>
-                    <Label Padding="10,0,0,0" Text="{Binding DateEntretien}" TextColor="White"/>
-                    <Label Padding="10,0,0,0" Text="{Binding IdStation}" TextColor="White"/>
-                    <Label Padding="10,0,0,0" Text="{Binding IdBorne}" TextColor="White"/>
+                    <Label Padding="10,0,0,0" Text="{Binding DateEntretien, StringFormat='{0} /'}" TextColor="White"/>
+                    <Label Padding="10,0,0,0" Text="{Binding IdStation, StringFormat='Station - {0} /'}" TextColor="White"/>
+                    <Label Padding="10,0,0,0" Text="{Binding IdBorne, StringFormat='Borne - {0}'}" TextColor="White"/>
                 </HorizontalStackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>
