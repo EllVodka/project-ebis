@@ -52,7 +52,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Button>
-        <CollectionView Grid.Column="1" Grid.Row="0" ItemsSource="{Binding journalOperation}" BackgroundColor="Red">
+        <CollectionView Grid.Column="1" Grid.Row="0" ItemsSource="{Binding journalOperation}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Operation">
                     <HorizontalStackLayout>
