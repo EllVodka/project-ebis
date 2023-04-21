@@ -13,7 +13,7 @@
             <Label Text="{Binding Entretien.PrenomTechnicien}"/>
         </HorizontalStackLayout>
         <Label Text="Element verifier : "/>
-        <CollectionView ItemsSource="{Binding elementVerif}" BackgroundColor="Red" >
+        <CollectionView ItemsSource="{Binding elementVerif}"  >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:ElementVerif">
                     <HorizontalStackLayout>
@@ -24,7 +24,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Label Text="Element Changer : "/>
-        <CollectionView ItemsSource="{Binding elementChanger}" BackgroundColor="Red" >
+        <CollectionView ItemsSource="{Binding elementChanger}"  >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:ElementVerif">
                     <HorizontalStackLayout>
@@ -35,7 +35,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Button
-            Text="Clique"
+            Text="Charger element verifié"
             Command="{Binding GetElementVerifCommand}"
             BorderWidth="3"
             VerticalOptions="Center"
